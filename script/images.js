@@ -50,20 +50,29 @@ targetFolders.forEach(targetFolder => {
   })
 })
 
-async function downloadAll() {
-  let index = 0
-  const uniqueImages = [...new Set(images)].slice(1480)
-  for (const image of uniqueImages) {
-    const imageName = image.replace(/https\:\/\/images.plurk.com\//, '')
-    // console.log(imageName)
-    
-    try {
-      await download(image, `images/${imageName}`)
-    } catch (e) {
-      console.log(e)
-    }
-    index ++
-    console.log(`${index}/${uniqueImages.length}: ${image}`)
+const uniqueImages = [...new Set(images)].map(image => image.replace(/https\:\/\/images.plurk.com\//, ''))
+// console.log(uniqueImages)
+const imageFileNames = fs.readdirSync('images/')
+imageFileNames.forEach(fileName => {
+  if (!uniqueImages.includes(fileName)) {
+    fs.unlinkSync('images/' + fileName)
   }
-}
-downloadAll()
+})
+
+// async function downloadAll() {
+//   let index = 0
+//   const uniqueImages = [...new Set(images)].slice(1480)
+//   for (const image of uniqueImages) {
+//     const imageName = image.replace(/https\:\/\/images.plurk.com\//, '')
+//     // console.log(imageName)
+    
+//     try {
+//       await download(image, `images/${imageName}`)
+//     } catch (e) {
+//       console.log(e)
+//     }
+//     index ++
+//     console.log(`${index}/${uniqueImages.length}: ${image}`)
+//   }
+// }
+// downloadAll()
