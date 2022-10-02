@@ -621,3 +621,13 @@ a.pictureservices:hover {
 .emoticons_campaign {
   vertical-align: top
 }
+
+.plurk-pin {
+  background: #fff7f7;
+  border: pink 2px solid;
+}
+
+#popplurk .plurk-pin {
+  border: none;
+  border-bottom: #EEE 1px solid;
+}
