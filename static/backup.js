@@ -70,6 +70,23 @@ function() {
               }, s.src = "data/responses/" + n + ".js", document.head.appendChild(s)
           }
       },
+      popupWithPID = function({content, pid}) {
+        var e = BackupData.user,
+            td = '<div class="avatar"><a target="_blank" href="https://www.plurk.com/' + e.nick_name + '"><img src="' + s(e.id, e.avatar, "medium") + '"></a></div>',
+            il = '<a target="_blank" href="https://www.plurk.com/' + e.nick_name + '" class="name"' + (e.name_color ? ' style="color:#' + e.name_color + '"' : "") + ">" + e.display_name + "</a>";
+        var sr = document.createElement("script");
+        sr.onload = function() {
+            var a = BackupData.responses[pid];
+            
+            var p = { content, response_count: a.length, base_id: pid },
+            l = '<div class="plurk' + (p.pin ? ' plurk-pin' : '') + ' clearfix" data-pid="' + p.id + '" data-basepid="' + p.base_id + '">' + td + '<div class="user"><span>' + il + (p.qualifier ? '<span class="qualifier q_' + p.qualifier + '">' + p.translate_qualifier + "</span>" : "") + (p.porn ? '<span class="cmp-porn pif-porn"></span>' : "") + '</span></div><div class="content">' + c(p.content) + '</div><div class="manager"><span class="response-count"><i class="cmp-response"></i><span>' + p.response_count + '</span></span><a href="https://www.plurk.com/p/' + p.base_id + '" target="_blank" class="open-plink"><i class="cmp-outlink"></i><span></span></a></div><div class="info">' + (p.private || p.limited_to ? '<span class="private cmp-privacy"></span>' : "") + '<span class="time">' + r(p.posted) + "</span></div></div>";
+            t.html(l), i.empty(), v();
+
+            setTimeout(function() {
+                d(a)
+            }, 200), $(s).remove(), delete BackupData.responses[pid]
+        }, sr.src = "data/responses/" + pid + ".js", document.head.appendChild(sr)
+      },
       d = function(a) {
           for (var n in a) {
               var e = a[n],
@@ -146,6 +163,26 @@ function() {
           }), $("body").on("click", "a.pictureservices", u), $(".popwindow-overlay, #popimage .popwindow-holder").on("click", function() {
               f($(this).parent(".popwindow"))
           })
-      }(), $(window).on('resize', v), v()
+      }(),
+      $(window).on('resize', v), v()
+      document.body.addEventListener("click", function(e) {
+        // e.target was the clicked element
+        if(e.target && e.target.nodeName == "A") {
+            const href = e.target.href
+            // console.log(href)
+            const idRegex = /https:\/\/www.plurk.com\/p\/(\w+)/
+            const result = href.match(idRegex)
+            // console.log(result)
+            if (result && result[1]) {
+                const basePID = result[1]
+                const plurkData = BackupData.userPlurked.find(plurk => basePID === plurk.pid)
+                if (plurkData) {
+                    // console.log(plurkData)
+                    popupWithPID(plurkData)
+                    e.preventDefault()
+                }
+            }
+        }
+      });
   })
 }();
