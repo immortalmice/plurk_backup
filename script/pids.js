@@ -16,14 +16,24 @@ fileNames.forEach((fileName, index) => {
     const rawPlurkData = JSON.parse(rawFile.replace(preRegex, '').replace(postRegex, ''))
     // console.log(rawPlurkData)
 
-    rawPlurkData.forEach(plurk => pids.push({
-      content: plurk.content,
-      pid: plurk.base_id
-    }))
+    rawPlurkData.forEach(plurk => pids.push(plurk.base_id))
   } catch (e) {
     console.log(e)
   }
 })
 
-console.log(pids)
-fs.writeFileSync('pids.txt', JSON.stringify(pids))
+// console.log(pids)
+
+const responseFolder = 'data/responses/'
+const responsesFileName = fs.readdirSync(responseFolder)
+responsesFileName.forEach(fileName => {
+  // console.log(fileName)
+  const jsRegex = /(\w+)\.js/
+  const result  = fileName.match(jsRegex)
+  if (result && result[1]) {
+    if (!pids.includes(result[1])) {
+      // console.log(result[1])
+      fs.unlinkSync(responseFolder + fileName)
+    }
+  }
+})
