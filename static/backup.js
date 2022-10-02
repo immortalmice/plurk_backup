@@ -80,7 +80,7 @@ function() {
             
             var p = { content, response_count: a.length, base_id: pid },
             l = '<div class="plurk' + (p.pin ? ' plurk-pin' : '') + ' clearfix" data-pid="' + p.id + '" data-basepid="' + p.base_id + '">' + td + '<div class="user"><span>' + il + (p.qualifier ? '<span class="qualifier q_' + p.qualifier + '">' + p.translate_qualifier + "</span>" : "") + (p.porn ? '<span class="cmp-porn pif-porn"></span>' : "") + '</span></div><div class="content">' + c(p.content) + '</div><div class="manager"><span class="response-count"><i class="cmp-response"></i><span>' + p.response_count + '</span></span><a href="https://www.plurk.com/p/' + p.base_id + '" target="_blank" class="open-plink"><i class="cmp-outlink"></i><span></span></a></div><div class="info">' + (p.private || p.limited_to ? '<span class="private cmp-privacy"></span>' : "") + '<span class="time">' + r(p.posted) + "</span></div></div>";
-            t.html(l), i.empty(), v();
+            t.html(l), i.empty(), m($("#popplurk")), v();
 
             setTimeout(function() {
                 d(a)
