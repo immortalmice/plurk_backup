@@ -19,7 +19,8 @@ BackupData = {
   user: {},
   indexes: {},
   plurks: {},
-  responses: {}
+  responses: {},
+  current: []
 },
 function() {
   var a, n, e, t, i, s = function(a, n, e) {
@@ -39,6 +40,7 @@ function() {
                   return n.id - a.id
               });
               a.unshift(BackupData.pin)
+              BackupData.current = [...BackupData.plurks[i]]
               setTimeout(function() {
                   p(a)
               }, 200), $(s).remove(), delete BackupData.plurks[i]
@@ -123,6 +125,14 @@ function() {
       },
       v = function() {
           i.css("height", e.find(".popwindow-holder").height() - t.height())
+      },
+      sort = function() {
+        var a = BackupData.current
+        var pin = a.shift()
+        a.reverse()
+        a.unshift(pin)
+        n.empty()
+        p(a)
       };
   $(document).ready(function() {
       ! function() {
@@ -184,5 +194,6 @@ function() {
             }
         }
       });
+      document.getElementsByClassName('sort-btn')[0].addEventListener("click", sort)
   })
 }();

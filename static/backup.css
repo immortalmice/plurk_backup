@@ -631,3 +631,20 @@ a.pictureservices:hover {
   border: none;
   border-bottom: #EEE 1px solid;
 }
+
+.sort-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #EDAEA7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  padding: 8px;
+  cursor: pointer;
+}
