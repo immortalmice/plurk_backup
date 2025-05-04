@@ -142,7 +142,7 @@ function() {
           var p = ["Karma " + c.karma],
               d = new Date(c.date_of_birth);
           if (d && (1970 != d.getUTCFullYear() || 0 != d.getUTCMinutes()) && (d.getUTCFullYear() > 1904 || 1 != d.getUTCSeconds())) {
-              var m = new Date(new Date(BackupData.info.backup_date).getTime() - d.getTime()).getUTCFullYear() - 1970;
+              var m = new Date(Date.now() - d.getTime()).getUTCFullYear() - 1970;
               p.push(m.toString() + " years old")
           }
           c.gender < 2 && p.push(0 == c.gender ? "Female" : "Male"), c.location && p.push(c.location), $("#account-info .other-info").html(p.join("<br>"));
